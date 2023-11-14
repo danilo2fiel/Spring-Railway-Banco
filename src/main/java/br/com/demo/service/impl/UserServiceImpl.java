@@ -26,8 +26,22 @@ import br.com.demo.service.UserService;
 		public User create(User userToCreate) {
 			if(repository.existsByAccountNumber(userToCreate.getAccount().getNumber())) {
 				throw new IllegalArgumentException("This acoount number aready exist");
+			}else if(repository.existsByCardNumber(userToCreate.getCard().getNumber())) {
+				throw new IllegalArgumentException("This card number aready exist");
+			} else {
+				return repository.save(userToCreate);
 			}
-			return repository.save(userToCreate);
 		}
+
+		@Override
+		public void delete(Long id) {
+			if(!repository.existsById(id)) {
+				throw new IllegalArgumentException("This id not exist");
+				
+			}
+			
+			repository.deleteById(id);
+		}
+			
 
 }
